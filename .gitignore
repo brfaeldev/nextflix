@@ -1,0 +1,29 @@
+# Dependências Node
+node_modules/
+
+# Subpastas monorepo
+apps/api/node_modules/
+apps/web/node_modules/
+
+# Logs
+npm-debug.log*
+
+# Ambiente
+.env
+
+# Build
+dist/
+build/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+__pycache__/
+*.pyc
+venv/
+.env
+sqlite.db
