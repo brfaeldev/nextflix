@@ -57,5 +57,44 @@ header {
 }
 
 .hero p {
-    font-size: ;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #d1d1d1;
+}
+
+.cta-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cta-form input {
+    padding: 12px;
+    width: 300px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+}
+
+.cta-form button {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cta-form button:hover {
+    background-color: #f40612;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #000;
+    color: #999;
 }
