@@ -3,75 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="Entre na sua conta Nextflix.">
     <title>Login | Nextflix</title>
-
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
+<body class="page-auth">
 
-<body class="login-body">
+    <main class="auth-card" aria-labelledby="login-title">
+        <a href="index.html" class="auth-card__logo">Nextflix</a>
 
-    <main class="login-container">
+        <h1 id="login-title" class="auth-card__title">Entrar</h1>
 
-        <section class="login-box">
+        <form id="login-form" class="auth-form" novalidate>
+            <label class="visually-hidden" for="login-email">Email</label>
+            <input
+                id="login-email"
+                class="field"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                autocomplete="email"
+            >
 
-            <h1 class="login-logo">
-                Nextflix
-            </h1>
+            <label class="visually-hidden" for="login-password">Senha</label>
+            <input
+                id="login-password"
+                class="field"
+                type="password"
+                name="password"
+                placeholder="Senha"
+                required
+                autocomplete="current-password"
+                minlength="6"
+            >
 
-            <h2>
-                Entrar
-            </h2>
+            <p id="login-error" class="auth-form__error message message--error" hidden></p>
 
-            <form class="login-form">
+            <button type="submit" class="btn btn--primary">Entrar</button>
+        </form>
 
-                <input
-                    type="email"
-                    placeholder="Email"
-                    required
-                >
+        <div class="auth-options">
+            <label>
+                <input type="checkbox" name="remember">
+                Lembre-se de mim
+            </label>
+            <a href="#">Precisa de ajuda?</a>
+        </div>
 
-                <input
-                    type="password"
-                    placeholder="Senha"
-                    required
-                >
-
-                <button type="submit">
-                    Entrar
-                </button>
-
-            </form>
-
-            <div class="login-options">
-
-                <label>
-                    <input type="checkbox">
-                    Lembre-se de mim
-                </label>
-
-                <a href="#">
-                    Precisa de ajuda?
-                </a>
-
-            </div>
-
-            <div class="register-link">
-
-                <p>
-                    Novo por aqui?
-                    <a href="./register.html">
-                        Cadastre-se agora
-                    </a>
-                </p>
-
-            </div>
-
-        </section>
-
+        <p class="auth-footer">
+            Novo por aqui?
+            <a href="register.html">Cadastre-se agora</a>
+        </p>
     </main>
 
-    <script type="module" src="./js/pages/login.js"></script>
-
+    <script type="module" src="js/pages/login.js"></script>
 </body>
 </html>
