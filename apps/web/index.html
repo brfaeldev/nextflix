@@ -3,42 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nextflix — filmes, séries e recomendações personalizadas.">
     <title>Nextflix | O seu próximo filme está aqui</title>
-    <!-- Link para o CSS -->
-     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/landing.css">
 </head>
-<body>
-    <header>
-        <div class="logo"> <!-- Geralmente, coloca-se uma imagem aqui -->
-            <h1>Nextflix</h1>
-        </div>
-        <nav>
-            <!-- O botão que levará para a tela de login -->
-             <a href="./login.html" class="btn-login">Entrar</a>
+<body class="page-landing">
+
+    <header class="site-header">
+        <a href="index.html" class="site-logo">Nextflix</a>
+        <nav aria-label="Principal">
+            <a href="login.html" class="btn btn--primary btn--header">Entrar</a>
         </nav>
     </header>
 
     <main>
-        <section class="hero"> <!-- Seção "Hero", onde fica a proposta de valor -->
-            <h2>Filmes, séries e recomendações feitas sob medida para você.</h2>
-            <p>Assista onde quiser. Cancele quando quiser</p>
-            <form action="/login.html" method="GET" class="cta-form">
-                <input type="email" placeholder="Email" required>
-                <button type="submit">Vamos lá</button>
+        <section class="landing-hero" aria-labelledby="hero-title">
+            <h1 id="hero-title" class="landing-hero__title">
+                Filmes, séries e recomendações feitas sob medida para você.
+            </h1>
+            <p class="landing-hero__subtitle">
+                Assista onde quiser. Cancele quando quiser.
+            </p>
+            <form id="cta-form" class="landing-cta" action="register.html" method="get">
+                <label class="visually-hidden" for="cta-email">Email</label>
+                <input
+                    id="cta-email"
+                    class="field field--light"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                    autocomplete="email"
+                >
+                <button type="submit" class="btn btn--primary">Vamos lá</button>
             </form>
         </section>
 
-        <!-- Aqui vamos injetar os componentes via JS -->
-        <section id="trending-preview">
-            <!-- Espaço para mostrar filmes em destaque -->
+        <section class="landing-trending" aria-labelledby="trending-title">
+            <h2 id="trending-title" class="landing-trending__title">Em alta agora</h2>
+            <p id="trending-status" class="landing-trending__status message message--info" hidden>
+                Carregando filmes…
+            </p>
+            <div class="movies-row" id="trending-row"></div>
         </section>
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <p>&copy; 2026 Nextflix. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Link para os scripts -->
-     <script type="module" src="./js/main.js"></script>
+    <script type="module" src="js/pages/landing.js"></script>
 </body>
 </html>

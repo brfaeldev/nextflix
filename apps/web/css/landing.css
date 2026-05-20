@@ -1,0 +1,75 @@
+/* Página inicial (index.html) */
+
+.page-landing {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-landing main {
+  flex: 1;
+}
+
+.landing-hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px 48px;
+}
+
+.landing-hero__title {
+  font-size: clamp(1.75rem, 4vw, 3.25rem);
+  max-width: 800px;
+  margin-bottom: 16px;
+  line-height: 1.15;
+}
+
+.landing-hero__subtitle {
+  font-size: 1.15rem;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.landing-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 520px;
+  width: 100%;
+}
+
+.landing-cta .field--light {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.landing-cta .btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+.landing-trending {
+  padding: 0 50px 60px;
+}
+
+.landing-trending__title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.landing-trending__status {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 16px 24px;
+  }
+
+  .landing-trending {
+    padding: 0 24px 48px;
+  }
+}

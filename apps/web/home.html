@@ -3,134 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Nextflix</title>
-
-    <link rel="stylesheet" href="./css/style.css">
+    <meta name="description" content="Assista filmes e séries no Nextflix.">
+    <title>Início | Nextflix</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
+<body class="page-home">
 
-<body class="home-body">
-
-    <!-- NAVBAR -->
-    <header class="navbar">
-
-        <div class="navbar-left">
-
-            <h1 class="logo">
-                Nextflix
-            </h1>
-
-            <nav class="nav-links">
-
-                <a href="#">Início</a>
-                <a href="#">Séries</a>
-                <a href="#">Filmes</a>
-                <a href="#">Minha Lista</a>
-
+    <header class="site-header">
+        <div class="site-header__nav">
+            <a href="index.html" class="site-logo">Nextflix</a>
+            <nav aria-label="Menu principal">
+                <ul class="nav-links">
+                    <li><a href="home.html">Início</a></li>
+                    <li><a href="#">Séries</a></li>
+                    <li><a href="#">Filmes</a></li>
+                </ul>
             </nav>
-
         </div>
-
-        <div class="navbar-right">
-
-            <button class="profile-btn">
-                Perfil
-            </button>
-
+        <div class="site-header__actions">
+            <span id="user-greeting" class="home-user"></span>
+            <button type="button" id="retrain-btn" class="btn btn--ghost btn--header">Atualizar recomendações</button>
+            <button type="button" id="logout-btn" class="btn btn--primary btn--header">Sair</button>
         </div>
-
     </header>
 
-    <!-- HERO -->
-    <section class="hero-banner">
-
-        <div class="hero-overlay">
-
-            <div class="hero-content">
-
-                <h2>
-                    Interestelar
-                </h2>
-
-                <p>
-                    Um grupo de exploradores viaja através de um buraco de minhoca no espaço
-                    na tentativa de garantir a sobrevivência da humanidade.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <button class="play-btn">
-                        ▶ Assistir
-                    </button>
-
-                    <button class="info-btn">
-                        Mais informações
-                    </button>
-
-                </div>
-
-            </div>
-
+    <section class="home-hero" id="home-hero" aria-live="polite">
+        <div class="home-hero__content">
+            <h1 class="home-hero__title" id="hero-movie-title">Carregando…</h1>
+            <p class="home-hero__description" id="hero-movie-description"></p>
         </div>
-
     </section>
 
-    <!-- FILMES -->
-    <main class="movies-section">
-
-        <section class="movie-category">
-
-            <h3>Populares</h3>
-
-            <div class="movies-row">
-
-               <div class="movie-card">
-
-    <img
-        src="https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg"
-        alt="Interestelar"
-    >
-
-    <p>Interestelar</p>
-
-</div>
-                <div class="movie-card">
-
-    <img
-        src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg"
-        alt="Batman"
-    >
-
-    <p>Batman</p>
-
-</div>
-                <div class="movie-card"></div>
-                <div class="movie-card"></div>
-                <div class="movie-card"></div>
-
-            </div>
-
+    <main class="home-catalog">
+        <section class="home-search" aria-label="Buscar filmes">
+            <form id="search-form" class="home-search__form">
+                <input
+                    id="search-input"
+                    class="field"
+                    type="search"
+                    placeholder="Buscar filme por título…"
+                    autocomplete="off"
+                >
+                <button type="submit" class="btn btn--primary">Buscar</button>
+            </form>
+            <p id="search-status" class="home-catalog__status message message--info" hidden></p>
+            <div class="movies-row" id="search-row"></div>
         </section>
 
-        <section class="movie-category">
-
-            <h3>Em alta</h3>
-
-            <div class="movies-row">
-
-                <div class="movie-card"></div>
-                <div class="movie-card"></div>
-                <div class="movie-card"></div>
-                <div class="movie-card"></div>
-                <div class="movie-card"></div>
-
-            </div>
-
+        <section aria-labelledby="rec-title">
+            <h2 id="rec-title" class="home-catalog__title">Recomendados para você</h2>
+            <p id="rec-status" class="home-catalog__status message message--info" hidden></p>
+            <div class="movies-row" id="rec-row"></div>
         </section>
 
+        <section aria-labelledby="popular-title">
+            <h2 id="popular-title" class="home-catalog__title">Populares</h2>
+            <p id="popular-status" class="home-catalog__status message message--info" hidden></p>
+            <div class="movies-row" id="popular-row"></div>
+        </section>
     </main>
 
-    <script type="module" src="./js/pages/home.js"></script>
-
+    <script type="module" src="js/pages/home.js"></script>
 </body>
 </html>

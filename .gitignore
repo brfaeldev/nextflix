@@ -27,3 +27,8 @@ __pycache__/
 venv/
 .env
 sqlite.db
+apps/api/data/
+data/
+models/
+ml/__pycache__/
+*.keras

@@ -1,1 +1,0 @@
-console.log("Página de cadastro carregada!");
