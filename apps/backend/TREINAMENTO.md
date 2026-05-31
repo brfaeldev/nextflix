@@ -318,7 +318,6 @@ src/ml/
     ├── experiment.py
     ├── plot_results.py
     ├── predict.py
-    └── lstm_model.py         # atalho → train.py
 ```
 
 ---

@@ -47,6 +47,7 @@ A IA é treinada offline no dataset MovieLens; no app, o histórico **real** de 
 ```
 nextflix/
 ├── README.md                 ← você está aqui
+├── ESTRUTURA.md              ← mapa completo pasta a pasta (todos os arquivos)
 ├── apps/
 │   ├── frontend/             ← interface (ver README do frontend)
 │   └── backend/              ← API + ML (ver README do backend)
@@ -103,6 +104,7 @@ Documentação completa: [apps/backend/TREINAMENTO.md](apps/backend/TREINAMENTO.
 
 | Documento | Conteúdo |
 |-----------|----------|
+| [ESTRUTURA.md](ESTRUTURA.md) | **Mapa completo** — cada pasta e arquivo do projeto |
 | [apps/frontend/README.md](apps/frontend/README.md) | Páginas, fluxos, JavaScript, autenticação |
 | [apps/backend/README.md](apps/backend/README.md) | API REST, banco, rotas, integração com o LSTM |
 | [apps/backend/TREINAMENTO.md](apps/backend/TREINAMENTO.md) | Dados, split, treino, métricas, experimentos, figuras |

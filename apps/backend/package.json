@@ -1,8 +1,8 @@
 {
-  "name": "api",
+  "name": "nextflix-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API REST Nextflix — Express, SQLite, LSTM",
+  "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
