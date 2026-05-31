@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nextflix | O seu próximo filme está aqui</title>
+    <!-- Link para o CSS -->
+     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Nextflix</h1>
+        </div>
+        <div id="landing-search-wrap" class="landing-search-wrap">
+            <input
+                type="search"
+                id="movie-search"
+                placeholder="Buscar filme..."
+                autocomplete="off"
+            >
+            <div id="search-results" class="search-results" hidden></div>
+        </div>
+        <nav>
+             <a href="./login.html" class="btn-login">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero"> <!-- Seção "Hero", onde fica a proposta de valor -->
+            <h2>Filmes e recomendações feitas sob medida para você.</h2>
+            <p>Assista onde quiser. Cancele quando quiser</p>
+            <form action="./login.html" method="GET" class="cta-form">
+                <input type="email" placeholder="Email" required>
+                <button type="submit">Vamos lá</button>
+            </form>
+        </section>
+
+        <!-- Aqui vamos injetar os componentes via JS -->
+        <section id="trending-preview">
+            <!-- Espaço para mostrar filmes em destaque -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Nextflix. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Link para os scripts -->
+     <script type="module" src="./js/main.js"></script>
+</body>
+</html>

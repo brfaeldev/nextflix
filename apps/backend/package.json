@@ -1,0 +1,33 @@
+{
+  "name": "nextflix-backend",
+  "version": "1.0.0",
+  "description": "API REST Nextflix — Express, SQLite, LSTM",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed": "node scripts/seed-movies.js",
+    "seed:posters": "node scripts/fetch-posters.js",
+    "ml:train": "python src/ml/models/train.py",
+    "ml:evaluate": "python src/ml/models/evaluate.py",
+    "ml:experiment": "python src/ml/models/experiment.py",
+    "ml:pipeline": "npm run ml:train && npm run ml:evaluate",
+    "ml:plots": "python src/ml/models/plot_results.py",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

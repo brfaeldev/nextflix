@@ -1,19 +1,9 @@
 {
     "name": "nextflix",
-    "version": "0.0.0",
-    "description": "Sistema de recomedação de filmes e séries",
-    "main": "index.js",
+    "version": "1.0.0",
+    "description": "Sistema de recomendação de filmes com LSTM (Nextflix)",
     "scripts": {
-        "web": "npm run start --prefix apps/web",
-        "api": "npm run dev --prefix apps/api",
-        "ml": "python -m uvicorn ml.serve:app --reload --port 5001",
-        "ml:data": "python -m ml.carregar_dados",
-        "ml:train": "python -m ml.modelo",
-        "ml:eval": "python -m ml.avaliacao",
-        "ml:retrain": "python -m ml.retrain_job",
-        "db:init": "npm run db:init --prefix apps/api",
-        "setup": "npm run db:init && npm run ml:data && npm run ml:train",
-        "start": "echo Use: npm run api, npm run web, npm run ml",
+        "start": "echo Ver README.md: apps/backend e apps/frontend",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": ["streaming", "recommendation", "python", "node"],

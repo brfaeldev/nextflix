@@ -1,53 +1,141 @@
 # Nextflix
 
-Sistema de recomendação de filmes com RNN (janela deslizante) treinada no MovieLens 100k, demo web em vanilla JS e API Node + SQLite.
+Plataforma web estilo streaming com **recomendação personalizada de filmes** usando uma rede neural recorrente (**LSTM**). Desenvolvido como trabalho prático da disciplina **Inteligência Artificial II**.
 
-## Pré-requisitos
+**Autores:** Bruno Rafael Barbosa, João Pedro Magrin, Ryan Augusto Dias
 
-- Node.js 18+
-- Python 3.10+ (testado em 3.14 com RNN em NumPy)
+---
 
-## Configuração
+## O que é o projeto?
 
-```bash
-cp .env.example .env
-# Opcional: TMDB_API_KEY para capas dos filmes
+O Nextflix simula uma experiência parecida com serviços de streaming:
+
+- Catálogo de filmes (base **MovieLens 100k**)
+- Cadastro, login e perfil do usuário
+- Rastreamento de interações (cliques, tempo no cartaz, curtidas)
+- **Recomendação por IA:** um modelo LSTM prevê o próximo filme com base nas últimas ações do usuário
+- Interface web para navegar, buscar, curtir e ver detalhes dos filmes
+
+A IA é treinada offline no dataset MovieLens; no app, o histórico **real** de cada usuário alimenta a inferência em tempo quase real.
+
+---
+
+## Arquitetura geral
+
+```
+┌─────────────────┐      HTTP/JSON       ┌─────────────────┐
+│  Frontend       │ ◄──────────────────► │  Backend (API)  │
+│  HTML + JS      │                      │  Node + Express │
+│  porta 5500     │                      │  porta 3000     │
+└─────────────────┘                      └────────┬────────┘
+                                                  │
+                    ┌─────────────────────────────┼─────────────────────────────┐
+                    │                             │                             │
+                    ▼                             ▼                             ▼
+             ┌────────────┐              ┌────────────┐              ┌────────────┐
+             │  SQLite    │              │  Python    │              │  TMDB API  │
+             │  usuários, │              │  LSTM      │              │  (posters) │
+             │  filmes,   │              │  predict   │              │  opcional  │
+             │  interações│              │  .py       │              └────────────┘
+             └────────────┘              └────────────┘
 ```
 
-## Instalação
+---
 
-```bash
-cd apps/api && npm install && cd ../..
-pip install -r ml/requirements.txt
+## Estrutura do repositório
+
+```
+nextflix/
+├── README.md                 ← você está aqui
+├── ESTRUTURA.md              ← mapa completo pasta a pasta (todos os arquivos)
+├── apps/
+│   ├── frontend/             ← interface (ver README do frontend)
+│   └── backend/              ← API + ML (ver README do backend)
+│       └── TREINAMENTO.md    ← pipeline LSTM em detalhes
+└── package.json
 ```
 
-## Dados e modelo
+---
+
+## Como rodar o projeto
+
+### Pré-requisitos
+
+- **Node.js** 18+
+- **Python** 3.10+ (para treino e recomendações)
+- Modelo treinado: `apps/backend/src/ml/models/nextflix_lstm.pth` (gerado com `npm run ml:train`)
+
+### 1. Backend (API)
 
 ```bash
-python -m ml.carregar_dados   # baixa MovieLens e popula o banco
-python -m ml.modelo           # treina a RNN
-python -m ml.avaliacao        # métricas Hit@5 / Hit@10
-python -m ml.enrich_catalog   # posters TMDB (opcional)
+cd apps/backend
+npm install
+cp .env.example .env   # configure JWT_SECRET e TMDB_API_KEY (opcional)
+npm run dev
 ```
 
-## Executar a demo
+API em `http://localhost:3000`
 
-Três terminais:
+### 2. Frontend
+
+Em outro terminal:
 
 ```bash
-npm run api    # http://localhost:3000
-npm run ml     # http://localhost:5001
-npm run web    # http://localhost:5500
+cd apps/frontend
+npm install
+npm run dev
 ```
 
-Fluxo: cadastro → login → curtir filmes → recomendações personalizadas.
+Abra `http://localhost:5500` → faça login ou cadastro → use a home com recomendações.
 
-Botão **Atualizar recomendações** na home dispara `python -m ml.retrain_job`.
+### 3. Treinar o modelo (primeira vez ou após mudanças no ML)
 
-## Estrutura
+```bash
+cd apps/backend
+pip install -r src/ml/requirements.txt
+npm run ml:pipeline    # treino + avaliação + figuras
+```
 
-- `apps/web` — frontend HTML/CSS/JS
-- `apps/api` — API Express + SQLite
-- `ml/` — pipeline RNN, FastAPI de inferência
-- `data/` — MovieLens (gitignored)
-- `models/` — modelo treinado (gitignored)
+Documentação completa: [apps/backend/TREINAMENTO.md](apps/backend/TREINAMENTO.md)
+
+---
+
+## Documentação por módulo
+
+| Documento | Conteúdo |
+|-----------|----------|
+| [ESTRUTURA.md](ESTRUTURA.md) | **Mapa completo** — cada pasta e arquivo do projeto |
+| [apps/frontend/README.md](apps/frontend/README.md) | Páginas, fluxos, JavaScript, autenticação |
+| [apps/backend/README.md](apps/backend/README.md) | API REST, banco, rotas, integração com o LSTM |
+| [apps/backend/TREINAMENTO.md](apps/backend/TREINAMENTO.md) | Dados, split, treino, métricas, experimentos, figuras |
+| [apps/backend/src/ml/README.md](apps/backend/src/ml/README.md) | Comandos rápidos do pipeline ML |
+
+---
+
+## Resultados do modelo (referência)
+
+Melhor configuração encontrada na experimentação (**5 épocas**, lr `0.001`, batch `64`):
+
+| Métrica (teste) | LSTM | Baseline popular |
+|-----------------|------|------------------|
+| Hit@10 | 0,1191 | 0,0064 |
+| NDCG@10 | 0,0583 | 0,0064 |
+
+Detalhes e gráficos: `apps/backend/src/ml/models/evaluation_report.json` e pasta `figures/`.
+
+---
+
+## Tecnologias principais
+
+| Camada | Stack |
+|--------|--------|
+| Frontend | HTML5, CSS3, JavaScript (ES modules) |
+| Backend | Node.js, Express 5, SQLite |
+| IA | PyTorch, LSTM, MovieLens 100k |
+| Auth | JWT |
+
+---
+
+## Licença
+
+ISC (ver `package.json`).

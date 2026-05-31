@@ -1,8 +1,0 @@
-{
-  "name": "nextflix-web",
-  "private": true,
-  "description": "Frontend vanilla do Nextflix",
-  "scripts": {
-    "start": "npx --yes serve . -p 5500"
-  }
-}
