@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nextflix</title>
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="home-body">
+
+    <header class="navbar">
+
+        <div class="navbar-left">
+
+            <h1 class="logo">
+                Nextflix
+            </h1>
+
+            <nav class="nav-links">
+                <a href="./home.html">Início</a>
+                <a href="#">Séries</a>
+                <a href="#">Filmes</a>
+                <a href="#">Minha Lista</a>
+            </nav>
+
+        </div>
+
+        <div class="navbar-right">
+            <button class="profile-btn" type="button">
+                Perfil
+            </button>
+        </div>
+
+    </header>
+
+    <section class="hero-banner" id="hero-banner">
+
+        <div class="hero-overlay">
+
+            <div class="hero-content">
+
+                <h2 id="hero-title">Carregando...</h2>
+
+                <p id="hero-description">
+                    Buscando recomendações personalizadas para você.
+                </p>
+
+                <p class="recommendation-info" id="recommendation-info"></p>
+
+                <div class="hero-buttons">
+                    <button class="play-btn" type="button">▶ Assistir</button>
+                    <button class="info-btn" type="button">Mais informações</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <main class="movies-section">
+
+        <section class="movie-category">
+            <div class="category-header">
+                <h3>Recomendado para você</h3>
+                <button
+                    type="button"
+                    class="refresh-btn"
+                    id="refresh-recommendation"
+                >
+                    Atualizar recomendação
+                </button>
+            </div>
+            <div class="movies-row" id="recommended-row"></div>
+        </section>
+
+        <section class="movie-category">
+            <h3>Populares</h3>
+            <div class="movies-row" id="popular-row"></div>
+        </section>
+
+        <section class="movie-category">
+            <h3>Em alta</h3>
+            <div class="movies-row" id="trending-row"></div>
+        </section>
+
+    </main>
+
+    <script type="module" src="./js/pages/home.js"></script>
+
+</body>
+</html>
