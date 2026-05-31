@@ -1,7 +1,9 @@
 const {
   getMovies,
   getTrendingMovies,
-  getMovieById
+  getMovieById,
+  getMovieDetails,
+  searchMovies
 } = require("../services/movieService");
 
 const listMovies = async (req, res) => {
@@ -41,8 +43,41 @@ const showMovie = async (req, res) => {
   }
 };
 
+const showMovieDetails = async (req, res) => {
+  try {
+    const movie = await getMovieDetails(req.params.id);
+
+    if (!movie) {
+      return res.status(404).json({ error: "Filme não encontrado" });
+    }
+
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const search = async (req, res) => {
+  try {
+    const query = req.query.q || "";
+
+    if (!query.trim()) {
+      return res.json([]);
+    }
+
+    const limit = Number(req.query.limit) || 12;
+    const movies = await searchMovies(query, limit);
+
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   listMovies,
   trendingMovies,
-  showMovie
+  showMovie,
+  showMovieDetails,
+  search
 };

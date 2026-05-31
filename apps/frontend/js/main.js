@@ -1,5 +1,8 @@
 import { getTrendingMovies } from "./api.js";
 import { renderMovieRow } from "./movies.js";
+import { initSearchBar } from "./search.js";
+
+initSearchBar();
 
 const showError = (message) => {
   const container = document.getElementById("trending-preview");
@@ -11,6 +14,11 @@ const showError = (message) => {
 
 async function loadTrendingMovies() {
   const container = document.getElementById("trending-preview");
+
+  container.innerHTML = `
+    <h2>🔥 Em Alta</h2>
+    <p class="loading-text">Carregando filmes...</p>
+  `;
 
   try {
     const movies = await getTrendingMovies(10);

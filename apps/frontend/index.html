@@ -10,11 +10,19 @@
 </head>
 <body>
     <header>
-        <div class="logo"> <!-- Geralmente, coloca-se uma imagem aqui -->
+        <div class="logo">
             <h1>Nextflix</h1>
         </div>
+        <div id="landing-search-wrap" class="landing-search-wrap">
+            <input
+                type="search"
+                id="movie-search"
+                placeholder="Buscar filme..."
+                autocomplete="off"
+            >
+            <div id="search-results" class="search-results" hidden></div>
+        </div>
         <nav>
-            <!-- O botão que levará para a tela de login -->
              <a href="./login.html" class="btn-login">Entrar</a>
         </nav>
     </header>

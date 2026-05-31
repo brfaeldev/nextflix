@@ -12,6 +12,7 @@ const authRoutes = require("./routes/authRoutes");
 const movieRoutes = require("./routes/movieRoutes");
 const interactionRoutes = require("./routes/interactionRoutes");
 const recommendationRoutes = require("./routes/recommendationRoutes");
+const ratingRoutes = require("./routes/ratingRoutes");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/auth", authRoutes);
 app.use("/movies", movieRoutes);
 app.use("/interactions", interactionRoutes);
 app.use("/recommendation", recommendationRoutes);
+app.use("/ratings", ratingRoutes);
 
 const PORT = process.env.PORT || 3000;
 

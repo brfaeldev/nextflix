@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Filme | Nextflix</title>
+    <title>Minha Lista | Nextflix</title>
 
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
-<body class="home-body movie-detail-body">
+<body class="home-body">
 
     <header class="navbar">
+
         <div class="navbar-left">
+
             <h1 class="logo">
                 <a href="./home.html">Nextflix</a>
             </h1>
@@ -24,6 +26,7 @@
                 <a href="./home.html#catalogo" data-nav="filmes">Filmes</a>
                 <a href="./minha-lista.html" data-nav="lista">Minha Lista</a>
             </nav>
+
         </div>
 
         <div class="navbar-right">
@@ -41,13 +44,23 @@
                 Perfil
             </button>
         </div>
+
     </header>
 
-    <main class="movie-detail" id="movie-detail">
-        <p class="loading-text">Carregando filme...</p>
+    <main class="movies-section page-section">
+        <section class="movie-category">
+            <h3>Minha Lista</h3>
+            <p class="page-subtitle" id="list-subtitle">
+                Filmes que você curtiu com 👍
+            </p>
+            <div class="movies-row" id="my-list-row"></div>
+            <p class="loading-text" id="list-empty" hidden>
+                Sua lista está vazia. Curta filmes na página de detalhes para salvá-los aqui.
+            </p>
+        </section>
     </main>
 
-    <script type="module" src="./js/pages/movie.js"></script>
+    <script type="module" src="./js/pages/minha-lista.js"></script>
 
 </body>
 </html>

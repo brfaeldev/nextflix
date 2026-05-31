@@ -42,11 +42,32 @@ export const getMovies = (limit = 20) =>
 export const getTrendingMovies = (limit = 12) =>
   apiFetch(`/movies/trending?limit=${limit}`);
 
+export const searchMovies = (query, limit = 12) =>
+  apiFetch(`/movies/search?q=${encodeURIComponent(query)}&limit=${limit}`);
+
 export const getMovieById = (id) =>
   apiFetch(`/movies/${id}`);
 
+export const getMovieDetails = (id) =>
+  apiFetch(`/movies/${id}/details`);
+
 export const getRecommendation = () =>
   apiFetch("/recommendation/me", {}, { redirectOn401: true });
+
+export const getMyInteractions = () =>
+  apiFetch("/interactions/me", {}, { redirectOn401: true });
+
+export const rateMovie = (movieId, rating) =>
+  apiFetch("/ratings", {
+    method: "POST",
+    body: JSON.stringify({ movie_id: movieId, rating })
+  }, { redirectOn401: true });
+
+export const getMyRating = (movieId) =>
+  apiFetch(`/ratings/me/${movieId}`, {}, { redirectOn401: true });
+
+export const getMyLikedMovies = () =>
+  apiFetch("/ratings/me/likes", {}, { redirectOn401: true });
 
 export const sendInteraction = (payload) =>
   apiFetch("/interactions", {

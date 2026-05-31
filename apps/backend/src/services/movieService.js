@@ -1,5 +1,6 @@
 const db = require("../database/connection");
 const { resolvePoster } = require("./posterService");
+const { getMovieDetailsFromTmdb } = require("./tmdbService");
 
 const GENRES = [
   "unknown", "Action", "Adventure", "Animation", "Children's",
@@ -76,10 +77,82 @@ const countMovies = () =>
     });
   });
 
+const searchMovies = (query, limit = 12) =>
+  new Promise((resolve, reject) => {
+    const term = `%${query.trim()}%`;
+
+    db.all(
+      `SELECT id, title, year, genre, poster
+       FROM movies
+       WHERE title LIKE ?
+       ORDER BY title ASC
+       LIMIT ?`,
+      [term, limit],
+      (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows.map(mapRow));
+      }
+    );
+  });
+
+const getSimilarMovies = (movieId, limit = 8) =>
+  new Promise((resolve, reject) => {
+    db.get(
+      `SELECT id, title, year, genre, poster
+       FROM movies
+       WHERE id = ?`,
+      [movieId],
+      (err, movie) => {
+        if (err) return reject(err);
+        if (!movie) return resolve([]);
+
+        const primaryGenre = (movie.genre || "").split(",")[0]?.trim();
+
+        if (!primaryGenre) {
+          return resolve([]);
+        }
+
+        db.all(
+          `SELECT id, title, year, genre, poster
+           FROM movies
+           WHERE id != ? AND genre LIKE ?
+           ORDER BY id ASC
+           LIMIT ?`,
+          [movieId, `%${primaryGenre}%`, limit],
+          (similarErr, rows) => {
+            if (similarErr) return reject(similarErr);
+            resolve(rows.map(mapRow));
+          }
+        );
+      }
+    );
+  });
+
+const getMovieDetails = async (id) => {
+  const movie = await getMovieById(id);
+
+  if (!movie) return null;
+
+  const tmdb = await getMovieDetailsFromTmdb(movie.title, movie.year);
+  const similar = await getSimilarMovies(id);
+
+  return {
+    ...movie,
+    overview:
+      tmdb.overview ||
+      "Sinopse indisponível no momento. Este filme faz parte do catálogo MovieLens usado pelo modelo de recomendação NextFlix.",
+    backdrop: tmdb.backdrop || movie.poster,
+    similar
+  };
+};
+
 module.exports = {
   GENRES,
   getMovies,
   getTrendingMovies,
   getMovieById,
+  getSimilarMovies,
+  getMovieDetails,
+  searchMovies,
   countMovies
 };

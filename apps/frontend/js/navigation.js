@@ -1,3 +1,28 @@
+export const navigateToMovie = (movieOrId) => {
+  const id =
+    typeof movieOrId === "object"
+      ? normalizeMovieId(movieOrId)
+      : normalizeMovieId({ id: movieOrId });
+
+  if (!id) {
+    console.warn("Tentativa de abrir filme sem ID válido");
+    return;
+  }
+
+  const onMoviePage = window.location.pathname.includes("movie.html");
+
+  if (onMoviePage) {
+    if (window.location.hash === `#${id}`) {
+      return;
+    }
+
+    window.location.hash = String(id);
+    return;
+  }
+
+  window.location.href = `movie.html#${id}`;
+};
+
 export const normalizeMovieId = (movie) => {
   const id = movie?.id ?? movie?.movieId;
   const parsed = Number(id);
@@ -25,19 +50,4 @@ export const getMovieIdFromUrl = () => {
   const fromHash = window.location.hash.replace(/^#/, "");
 
   return normalizeMovieId({ id: fromQuery || fromHash });
-};
-
-export const navigateToMovie = (movieOrId) => {
-  const id =
-    typeof movieOrId === "object"
-      ? normalizeMovieId(movieOrId)
-      : normalizeMovieId({ id: movieOrId });
-
-  if (!id) {
-    console.warn("Tentativa de abrir filme sem ID válido");
-    return;
-  }
-
-  // Hash evita perder o ID quando o serve redireciona movie.html → /movie
-  window.location.href = `movie.html#${id}`;
 };

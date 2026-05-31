@@ -17,19 +17,29 @@
         <div class="navbar-left">
 
             <h1 class="logo">
-                Nextflix
+                <a href="./home.html">Nextflix</a>
             </h1>
 
             <nav class="nav-links">
-                <a href="./home.html">Início</a>
-                <a href="#">Séries</a>
-                <a href="#">Filmes</a>
-                <a href="#">Minha Lista</a>
+                <a href="./home.html" data-nav="inicio">Início</a>
+                <a href="./series.html" data-nav="series">Séries</a>
+                <a href="./home.html#catalogo" data-nav="filmes">Filmes</a>
+                <a href="./minha-lista.html" data-nav="lista">Minha Lista</a>
             </nav>
 
         </div>
 
         <div class="navbar-right">
+            <div class="navbar-search">
+                <input
+                    type="search"
+                    id="movie-search"
+                    placeholder="Buscar filme..."
+                    autocomplete="off"
+                >
+                <div id="search-results" class="search-results" hidden></div>
+            </div>
+
             <button class="profile-btn" type="button">
                 Perfil
             </button>
@@ -62,7 +72,7 @@
 
     </section>
 
-    <main class="movies-section">
+    <main class="movies-section" id="catalogo">
 
         <section class="movie-category">
             <div class="category-header">

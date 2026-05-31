@@ -1,11 +1,16 @@
 import {
   getMovies,
   getTrendingMovies,
-  getRecommendation
+  getRecommendation,
+  getMyInteractions
 } from "../api.js";
 import { getUser, logout, requireAuth } from "../auth.js";
 import { formatHistoryTitles, renderMovieRow } from "../movies.js";
 import { navigateToMovie, normalizeMovie } from "../navigation.js";
+import { initSearchBar } from "../search.js";
+import { handleCatalogHash, initMainNav } from "../navbar.js";
+
+const REFRESH_FLAG = "nextflix_refresh_recommendation";
 
 if (!requireAuth()) {
   throw new Error("Usuário não autenticado");
@@ -28,6 +33,11 @@ let currentHeroMovie = null;
 let lastRecommendedId = null;
 
 profileBtn.textContent = user?.name?.split(" ")[0] || "Perfil";
+
+initSearchBar();
+initMainNav("inicio");
+handleCatalogHash();
+window.addEventListener("hashchange", handleCatalogHash);
 
 profileBtn.addEventListener("click", () => {
   logout();
@@ -81,9 +91,17 @@ const buildStatusMessage = (data, previousId) => {
   }
 
   const changed = previousId && movie && previousId !== movie.id;
-  const changeNote = changed
+  let changeNote = changed
     ? "Nova sugestão encontrada."
-    : "Mesma sugestão — clique em filmes diferentes para mudar o resultado.";
+    : "Mesma sugestão — interaja ou curta filmes diferentes para mudar o resultado.";
+
+  if (data.likedCount > 0) {
+    changeNote += ` Curtidas consideradas: ${data.likedCount}.`;
+  }
+
+  if (data.filterNote) {
+    changeNote += ` ${data.filterNote}`;
+  }
 
   return `Atualizado às ${time}. ${changeNote} Histórico usado: ${historyLabel}.`;
 };
@@ -121,7 +139,7 @@ const loadRecommendation = async ({ fromRefresh = false } = {}) => {
 
     setHero(
       movie,
-      data.source === "lstm"
+      data.source === "lstm" || data.source === "lstm_filtered"
         ? `Recomendado com base no seu histórico: ${historyLabel}`
         : data.message
     );
@@ -142,6 +160,9 @@ const loadRecommendation = async ({ fromRefresh = false } = {}) => {
 };
 
 const loadCatalog = async () => {
+  popularRow.innerHTML = "<p class='loading-text'>Carregando filmes...</p>";
+  trendingRow.innerHTML = "<p class='loading-text'>Carregando filmes...</p>";
+
   const [popular, trending] = await Promise.all([
     getMovies(12),
     getTrendingMovies(12)
@@ -155,9 +176,36 @@ const loadCatalog = async () => {
   }
 };
 
+const showInteractionHint = async () => {
+  try {
+    const data = await getMyInteractions();
+
+    if (data.history.length >= 3) return;
+
+    recommendationInfo.textContent =
+      `Você tem ${data.history.length} interação(ões). Faltam ${3 - data.history.length} para a IA personalizar totalmente — ou use 👍 Gostei nos filmes.`;
+  } catch (error) {
+    console.warn(error.message);
+  }
+};
+
 refreshBtn.addEventListener("click", () =>
   loadRecommendation({ fromRefresh: true })
 );
 
-loadCatalog();
-loadRecommendation();
+const bootstrap = async () => {
+  await loadCatalog();
+
+  const shouldRefresh = sessionStorage.getItem(REFRESH_FLAG) === "1";
+
+  if (shouldRefresh) {
+    sessionStorage.removeItem(REFRESH_FLAG);
+    await loadRecommendation({ fromRefresh: true });
+  } else {
+    await loadRecommendation();
+  }
+
+  await showInteractionHint();
+};
+
+bootstrap();
