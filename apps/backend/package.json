@@ -8,6 +8,11 @@
     "start": "node src/server.js",
     "seed": "node scripts/seed-movies.js",
     "seed:posters": "node scripts/fetch-posters.js",
+    "ml:train": "python src/ml/models/train.py",
+    "ml:evaluate": "python src/ml/models/evaluate.py",
+    "ml:experiment": "python src/ml/models/experiment.py",
+    "ml:pipeline": "npm run ml:train && npm run ml:evaluate",
+    "ml:plots": "python src/ml/models/plot_results.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

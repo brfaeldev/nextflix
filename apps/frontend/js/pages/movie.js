@@ -3,7 +3,8 @@ import {
   getMyRating,
   rateMovie
 } from "../api.js";
-import { getUser, isLoggedIn, logout } from "../auth.js";
+import { isLoggedIn } from "../auth.js";
+import { initProfileMenu } from "../profile-menu.js";
 import { trackClick } from "../interactions.js";
 import { getMovieIdFromUrl } from "../navigation.js";
 import { renderMovieRow } from "../movies.js";
@@ -21,12 +22,7 @@ const container = document.getElementById("movie-detail");
 const profileBtn = document.getElementById("profile-btn");
 
 if (isLoggedIn()) {
-  const user = getUser();
-  profileBtn.textContent = user?.name?.split(" ")[0] || "Perfil";
-  profileBtn.addEventListener("click", () => {
-    logout();
-    window.location.href = "./login.html";
-  });
+  initProfileMenu(profileBtn);
 } else {
   profileBtn.textContent = "Entrar";
   profileBtn.addEventListener("click", () => {

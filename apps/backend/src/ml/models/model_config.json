@@ -1,0 +1,15 @@
+{
+  "num_movies": 1682,
+  "sequence_length": 3,
+  "embedding_dim": 64,
+  "hidden_size": 128,
+  "hyperparameters": {
+    "epochs": 5,
+    "lr": 0.001,
+    "batch_size": 64,
+    "embedding_dim": 64,
+    "hidden_size": 128
+  },
+  "best_val_hit@10": 0.1168,
+  "model_file": "nextflix_lstm.pth"
+}

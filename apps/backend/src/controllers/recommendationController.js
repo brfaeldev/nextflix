@@ -63,7 +63,20 @@ const recommendMovie = async (req, res) => {
 
     getRecommendation(recentHistory, async (err, result) => {
       if (err) {
-        return res.status(500).json({ error: err.message });
+        console.warn("[recommendation] Fallback após erro LSTM:", err.message);
+        const fallback = await getTrendingMovies(1);
+
+        return res.json({
+          userId,
+          history: recentHistory,
+          historyMovies: recentHistoryMovies,
+          likedCount: likedIds.length,
+          source: "fallback",
+          updatedAt: new Date().toISOString(),
+          message:
+            "IA temporariamente indisponível — exibindo título em alta. Treine o modelo com npm run ml:train.",
+          recommendedMovie: fallback[0] || null
+        });
       }
 
       try {

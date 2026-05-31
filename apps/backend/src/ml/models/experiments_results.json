@@ -1,0 +1,66 @@
+{
+  "started_at": "2026-05-31T19:35:04.391044+00:00",
+  "runs": [
+    {
+      "params": {
+        "epochs": 5,
+        "lr": 0.001,
+        "batch_size": 64
+      },
+      "test_metrics": {
+        "hit@1": 0.0174,
+        "hit@5": 0.0659,
+        "hit@10": 0.1191,
+        "ndcg@10": 0.0583
+      },
+      "best_val_hit@10": 0.1133,
+      "evaluate_stdout": "=== Avalia\u00e7\u00e3o no conjunto de TESTE (n\u00e3o visto no treino) ===\n\nAmostras de teste: 14577\n\nModelo                    Hit@1    Hit@5   Hit@10    NDCG@10\n------------------------------------------------------------\nLSTM (Nextflix)          0.0174   0.0659   0.1191     0.0583\nBaseline popular         0.0064   0.0064   0.0064     0.0064\nBaseline aleat\u00f3rio       0.0005   0.0026   0.0060     0.0026\n\nRelat\u00f3rio salvo em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\evaluation_report.json\n\nFiguras salvas em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\figures\n  - training_loss.png\n  - training_metrics.png\n  - baselines_comparison.png\n  - confusion_matrix.png\n  - confusion_matrix_normalized.png\n"
+    },
+    {
+      "params": {
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 64
+      },
+      "test_metrics": {
+        "hit@1": 0.0168,
+        "hit@5": 0.0677,
+        "hit@10": 0.1147,
+        "ndcg@10": 0.0572
+      },
+      "best_val_hit@10": 0.1143,
+      "evaluate_stdout": "=== Avalia\u00e7\u00e3o no conjunto de TESTE (n\u00e3o visto no treino) ===\n\nAmostras de teste: 14577\n\nModelo                    Hit@1    Hit@5   Hit@10    NDCG@10\n------------------------------------------------------------\nLSTM (Nextflix)          0.0168   0.0677   0.1147     0.0572\nBaseline popular         0.0064   0.0064   0.0064     0.0064\nBaseline aleat\u00f3rio       0.0005   0.0026   0.0060     0.0026\n\nRelat\u00f3rio salvo em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\evaluation_report.json\n\nFiguras salvas em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\figures\n  - training_loss.png\n  - training_metrics.png\n  - baselines_comparison.png\n  - confusion_matrix.png\n  - confusion_matrix_normalized.png\n"
+    },
+    {
+      "params": {
+        "epochs": 10,
+        "lr": 0.0005,
+        "batch_size": 128
+      },
+      "test_metrics": {
+        "hit@1": 0.0158,
+        "hit@5": 0.0667,
+        "hit@10": 0.1157,
+        "ndcg@10": 0.0569
+      },
+      "best_val_hit@10": 0.1155,
+      "evaluate_stdout": "=== Avalia\u00e7\u00e3o no conjunto de TESTE (n\u00e3o visto no treino) ===\n\nAmostras de teste: 14577\n\nModelo                    Hit@1    Hit@5   Hit@10    NDCG@10\n------------------------------------------------------------\nLSTM (Nextflix)          0.0158   0.0667   0.1157     0.0569\nBaseline popular         0.0064   0.0064   0.0064     0.0064\nBaseline aleat\u00f3rio       0.0005   0.0026   0.0060     0.0026\n\nRelat\u00f3rio salvo em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\evaluation_report.json\n\nFiguras salvas em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\figures\n  - training_loss.png\n  - training_metrics.png\n  - baselines_comparison.png\n  - confusion_matrix.png\n  - confusion_matrix_normalized.png\n"
+    }
+  ],
+  "best_run": {
+    "params": {
+      "epochs": 5,
+      "lr": 0.001,
+      "batch_size": 64
+    },
+    "test_metrics": {
+      "hit@1": 0.0174,
+      "hit@5": 0.0659,
+      "hit@10": 0.1191,
+      "ndcg@10": 0.0583
+    },
+    "best_val_hit@10": 0.1133,
+    "evaluate_stdout": "=== Avalia\u00e7\u00e3o no conjunto de TESTE (n\u00e3o visto no treino) ===\n\nAmostras de teste: 14577\n\nModelo                    Hit@1    Hit@5   Hit@10    NDCG@10\n------------------------------------------------------------\nLSTM (Nextflix)          0.0174   0.0659   0.1191     0.0583\nBaseline popular         0.0064   0.0064   0.0064     0.0064\nBaseline aleat\u00f3rio       0.0005   0.0026   0.0060     0.0026\n\nRelat\u00f3rio salvo em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\evaluation_report.json\n\nFiguras salvas em: C:\\Users\\Bruno\\Downloads\\nextflix\\apps\\backend\\src\\ml\\models\\figures\n  - training_loss.png\n  - training_metrics.png\n  - baselines_comparison.png\n  - confusion_matrix.png\n  - confusion_matrix_normalized.png\n"
+  },
+  "finished_at": "2026-05-31T19:37:56.557136+00:00"
+}

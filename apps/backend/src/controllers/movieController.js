@@ -1,6 +1,7 @@
 const {
   getMovies,
   getTrendingMovies,
+  getMoviesByGenre,
   getMovieById,
   getMovieDetails,
   searchMovies
@@ -57,6 +58,23 @@ const showMovieDetails = async (req, res) => {
   }
 };
 
+const moviesByGenre = async (req, res) => {
+  try {
+    const genre = req.params.genre || "";
+
+    if (!genre.trim()) {
+      return res.status(400).json({ error: "Gênero não informado" });
+    }
+
+    const limit = Number(req.query.limit) || 20;
+    const movies = await getMoviesByGenre(genre, limit);
+
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const search = async (req, res) => {
   try {
     const query = req.query.q || "";
@@ -77,6 +95,7 @@ const search = async (req, res) => {
 module.exports = {
   listMovies,
   trendingMovies,
+  moviesByGenre,
   showMovie,
   showMovieDetails,
   search

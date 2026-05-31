@@ -1,3 +1,8 @@
+"""
+Pré-processamento exploratório.
+O pipeline oficial de treino/avaliação está em utils/data.py e models/train.py.
+"""
+
 import pandas as pd
 import os
 

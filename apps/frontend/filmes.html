@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Séries | Nextflix</title>
+    <title>Filmes | Nextflix</title>
 
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
     <link rel="stylesheet" href="./css/style.css">
@@ -13,20 +13,16 @@
 <body class="home-body">
 
     <header class="navbar">
-
         <div class="navbar-left">
-
             <h1 class="logo">
                 <a href="./home.html">Nextflix</a>
             </h1>
 
             <nav class="nav-links">
                 <a href="./home.html" data-nav="inicio">Início</a>
-                <a href="./series.html" data-nav="series">Séries</a>
-                <a href="./home.html#catalogo" data-nav="filmes">Filmes</a>
+                <a href="./filmes.html" data-nav="filmes">Filmes</a>
                 <a href="./minha-lista.html" data-nav="lista">Minha Lista</a>
             </nav>
-
         </div>
 
         <div class="navbar-right">
@@ -44,21 +40,15 @@
                 Perfil
             </button>
         </div>
-
     </header>
 
-    <main class="page-section coming-soon">
-        <h2>Séries em breve</h2>
-        <p>
-            O catálogo atual usa o dataset MovieLens, que contém apenas filmes.
-            A recomendação por IA também foi treinada nesse conjunto.
-        </p>
-        <p>
-            <a href="./home.html#catalogo">Ver catálogo de filmes</a>
-        </p>
+    <main class="movies-section page-section" id="filmes-catalog">
+        <h2 class="page-title">Filmes</h2>
+        <p class="page-subtitle">Explore o catálogo por gênero. Use as setas para navegar em cada fileira.</p>
+        <div id="genre-rows"></div>
     </main>
 
-    <script type="module" src="./js/pages/series.js"></script>
+    <script type="module" src="./js/pages/filmes.js"></script>
 
 </body>
 </html>

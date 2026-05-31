@@ -77,6 +77,24 @@ const countMovies = () =>
     });
   });
 
+const getMoviesByGenre = (genre, limit = 20) =>
+  new Promise((resolve, reject) => {
+    const term = `%${genre.trim()}%`;
+
+    db.all(
+      `SELECT id, title, year, genre, poster
+       FROM movies
+       WHERE genre LIKE ?
+       ORDER BY id ASC
+       LIMIT ?`,
+      [term, limit],
+      (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows.map(mapRow));
+      }
+    );
+  });
+
 const searchMovies = (query, limit = 12) =>
   new Promise((resolve, reject) => {
     const term = `%${query.trim()}%`;
@@ -150,6 +168,7 @@ module.exports = {
   GENRES,
   getMovies,
   getTrendingMovies,
+  getMoviesByGenre,
   getMovieById,
   getSimilarMovies,
   getMovieDetails,

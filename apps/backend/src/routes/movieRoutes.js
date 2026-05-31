@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   listMovies,
   trendingMovies,
+  moviesByGenre,
   showMovie,
   showMovieDetails,
   search
@@ -12,6 +13,7 @@ const {
 router.get("/", listMovies);
 router.get("/trending", trendingMovies);
 router.get("/search", search);
+router.get("/genre/:genre", moviesByGenre);
 router.get("/:id/details", showMovieDetails);
 router.get("/:id", showMovie);
 

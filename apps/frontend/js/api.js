@@ -86,3 +86,15 @@ export const registerRequest = (name, email, password) =>
     method: "POST",
     body: JSON.stringify({ name, email, password })
   });
+
+export const getMe = () =>
+  apiFetch("/auth/me", {}, { redirectOn401: true });
+
+export const updateProfile = (payload) =>
+  apiFetch("/auth/profile", {
+    method: "PATCH",
+    body: JSON.stringify(payload)
+  }, { redirectOn401: true });
+
+export const getMoviesByGenre = (genre, limit = 20) =>
+  apiFetch(`/movies/genre/${encodeURIComponent(genre)}?limit=${limit}`);

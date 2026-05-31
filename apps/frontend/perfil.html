@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perfil | Nextflix</title>
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="home-body">
+
+    <header class="navbar">
+        <div class="navbar-left">
+            <h1 class="logo">
+                <a href="./home.html">Nextflix</a>
+            </h1>
+
+            <nav class="nav-links">
+                <a href="./home.html" data-nav="inicio">Início</a>
+                <a href="./filmes.html" data-nav="filmes">Filmes</a>
+                <a href="./minha-lista.html" data-nav="lista">Minha Lista</a>
+            </nav>
+        </div>
+
+        <div class="navbar-right">
+            <div class="navbar-search">
+                <input
+                    type="search"
+                    id="movie-search"
+                    placeholder="Buscar filme..."
+                    autocomplete="off"
+                >
+                <div id="search-results" class="search-results" hidden></div>
+            </div>
+
+            <button class="profile-btn" type="button" id="profile-btn">
+                Perfil
+            </button>
+        </div>
+    </header>
+
+    <main class="profile-page page-section">
+        <h2>Configurações do perfil</h2>
+        <p class="page-subtitle">Atualize seu nome, email ou senha de acesso.</p>
+
+        <form class="profile-form" id="profile-form">
+            <label>
+                Nome
+                <input type="text" id="profile-name" name="name" required autocomplete="name">
+            </label>
+
+            <label>
+                Email
+                <input type="email" id="profile-email" name="email" required autocomplete="email">
+            </label>
+
+            <fieldset class="profile-password-fieldset">
+                <legend>Alterar senha (opcional)</legend>
+
+                <label>
+                    Senha atual
+                    <input
+                        type="password"
+                        id="profile-current-password"
+                        name="currentPassword"
+                        autocomplete="current-password"
+                    >
+                </label>
+
+                <label>
+                    Nova senha
+                    <input
+                        type="password"
+                        id="profile-new-password"
+                        name="newPassword"
+                        autocomplete="new-password"
+                        minlength="6"
+                    >
+                </label>
+            </fieldset>
+
+            <p class="form-error" id="profile-error" hidden></p>
+            <p class="profile-success" id="profile-success" hidden></p>
+
+            <button type="submit" class="profile-save-btn">Salvar alterações</button>
+        </form>
+    </main>
+
+    <script type="module" src="./js/pages/perfil.js"></script>
+
+</body>
+</html>

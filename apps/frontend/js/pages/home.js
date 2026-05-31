@@ -2,9 +2,11 @@ import {
   getMovies,
   getTrendingMovies,
   getRecommendation,
-  getMyInteractions
+  getMyInteractions,
+  getMovieDetails
 } from "../api.js";
-import { getUser, logout, requireAuth } from "../auth.js";
+import { requireAuth } from "../auth.js";
+import { initProfileMenu } from "../profile-menu.js";
 import { formatHistoryTitles, renderMovieRow } from "../movies.js";
 import { navigateToMovie, normalizeMovie } from "../navigation.js";
 import { initSearchBar } from "../search.js";
@@ -15,8 +17,6 @@ const REFRESH_FLAG = "nextflix_refresh_recommendation";
 if (!requireAuth()) {
   throw new Error("Usuário não autenticado");
 }
-
-const user = getUser();
 
 const profileBtn = document.querySelector(".profile-btn");
 const heroTitle = document.getElementById("hero-title");
@@ -31,18 +31,13 @@ const heroInfoBtn = document.querySelector(".info-btn");
 
 let currentHeroMovie = null;
 let lastRecommendedId = null;
-
-profileBtn.textContent = user?.name?.split(" ")[0] || "Perfil";
+let catalogFallbackMovie = null;
 
 initSearchBar();
 initMainNav("inicio");
+initProfileMenu(profileBtn);
 handleCatalogHash();
 window.addEventListener("hashchange", handleCatalogHash);
-
-profileBtn.addEventListener("click", () => {
-  logout();
-  window.location.href = "./login.html";
-});
 
 heroInfoBtn.addEventListener("click", () => {
   if (!currentHeroMovie) {
@@ -148,7 +143,18 @@ const loadRecommendation = async ({ fromRefresh = false } = {}) => {
     recommendationInfo.classList.add("is-updated");
     setTimeout(() => recommendationInfo.classList.remove("is-updated"), 1200);
 
-    renderMovieRow(recommendedRow, [movie]);
+    let rowMovies = [movie];
+
+    try {
+      const details = await getMovieDetails(movie.id);
+      if (details.similar?.length) {
+        rowMovies = details.similar;
+      }
+    } catch {
+      /* mantém só o recomendado na fileira */
+    }
+
+    renderMovieRow(recommendedRow, rowMovies);
     lastRecommendedId = movie.id;
   } catch (error) {
     recommendationInfo.textContent = `Recomendação indisponível: ${error.message}`;
@@ -171,9 +177,7 @@ const loadCatalog = async () => {
   renderMovieRow(popularRow, popular);
   renderMovieRow(trendingRow, trending);
 
-  if (!currentHeroMovie) {
-    setHero(trending[0] || popular[0]);
-  }
+  catalogFallbackMovie = trending[0] || popular[0] || null;
 };
 
 const showInteractionHint = async () => {
@@ -194,7 +198,7 @@ refreshBtn.addEventListener("click", () =>
 );
 
 const bootstrap = async () => {
-  await loadCatalog();
+  const catalogPromise = loadCatalog();
 
   const shouldRefresh = sessionStorage.getItem(REFRESH_FLAG) === "1";
 
@@ -203,6 +207,12 @@ const bootstrap = async () => {
     await loadRecommendation({ fromRefresh: true });
   } else {
     await loadRecommendation();
+  }
+
+  await catalogPromise;
+
+  if (!currentHeroMovie && catalogFallbackMovie) {
+    setHero(catalogFallbackMovie, "Em alta no catálogo");
   }
 
   await showInteractionHint();

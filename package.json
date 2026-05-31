@@ -1,10 +1,10 @@
 {
     "name": "nextflix",
     "version": "0.0.0",
-    "description": "Sistema de recomedação de filmes e séries",
+    "description": "Sistema de recomendação de filmes com LSTM (Nextflix)",
     "main": "index.js",
     "scripts": {
-        "start": "echo 'Em breve: scripts para rodar o projeto todo'",
+        "start": "echo Ver README.md: apps/backend e apps/frontend",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": ["streaming", "recommendation", "python", "node"],

@@ -40,6 +40,41 @@ export const renderMovieRow = (container, movies, options = {}) => {
   });
 };
 
+const scrollCarousel = (row, direction) => {
+  const amount = Math.max(row.clientWidth * 0.85, 280);
+  row.scrollBy({ left: direction * amount, behavior: "smooth" });
+};
+
+export const renderCarouselRow = (container, movies, options = {}) => {
+  container.innerHTML = "";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.type = "button";
+  prevBtn.className = "carousel-btn carousel-btn-prev";
+  prevBtn.setAttribute("aria-label", "Ver anteriores");
+  prevBtn.textContent = "‹";
+
+  const nextBtn = document.createElement("button");
+  nextBtn.type = "button";
+  nextBtn.className = "carousel-btn carousel-btn-next";
+  nextBtn.setAttribute("aria-label", "Ver próximos");
+  nextBtn.textContent = "›";
+
+  const row = document.createElement("div");
+  row.className = "movies-row";
+
+  movies.forEach((movie) => {
+    row.appendChild(renderMovieCard(movie, options));
+  });
+
+  prevBtn.addEventListener("click", () => scrollCarousel(row, -1));
+  nextBtn.addEventListener("click", () => scrollCarousel(row, 1));
+
+  container.appendChild(prevBtn);
+  container.appendChild(row);
+  container.appendChild(nextBtn);
+};
+
 export const formatHistoryTitles = (historyMovies = []) =>
   historyMovies.map((movie) => movie.title).join(" → ");
 

@@ -1,162 +1,79 @@
-import torch
-import torch.nn as nn
-import pandas as pd
+import json
 import os
 import sys
+from pathlib import Path
 
-# ====================================
-# UTF-8
-# ====================================
+import pandas as pd
+import torch
 
-sys.stdout.reconfigure(encoding='utf-8')
+ML_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ML_ROOT))
 
-# ====================================
-# MODELO LSTM
-# ====================================
+from models.model import RecommenderLSTM  # noqa: E402
 
-class RecommenderLSTM(nn.Module):
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
-    def __init__(self, num_movies):
+BASE_DIR = Path(__file__).resolve().parent
+ITEM_PATH = BASE_DIR / "../data/raw/ml-100k/u.item"
+MODEL_PATH = BASE_DIR / "nextflix_lstm.pth"
+CONFIG_PATH = BASE_DIR / "model_config.json"
 
-        super().__init__()
 
-        self.embedding = nn.Embedding(
-            num_movies + 1,
-            64
+def load_movie_titles():
+    movies_df = pd.read_csv(
+        ITEM_PATH,
+        sep="|",
+        encoding="latin-1",
+        header=None,
+    )
+    return {int(row[0]): row[1] for _, row in movies_df.iterrows()}
+
+
+def load_model():
+    if not MODEL_PATH.exists():
+        raise FileNotFoundError(
+            f"Modelo não treinado. Execute: python train.py (em {BASE_DIR})"
         )
 
-        self.lstm = nn.LSTM(
-            input_size=64,
-            hidden_size=128,
-            batch_first=True
+    if CONFIG_PATH.exists():
+        config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        num_movies = config["num_movies"]
+        model = RecommenderLSTM(
+            num_movies,
+            embedding_dim=config.get("embedding_dim", 64),
+            hidden_size=config.get("hidden_size", 128),
         )
+    else:
+        data_path = BASE_DIR / "../data/raw/ml-100k/u.data"
+        df = pd.read_csv(data_path, sep="\t", names=["user_id", "movie_id", "rating", "timestamp"])
+        num_movies = int(df["movie_id"].max())
+        model = RecommenderLSTM(num_movies)
 
-        self.fc = nn.Linear(
-            128,
-            num_movies + 1
-        )
+    model.load_state_dict(torch.load(MODEL_PATH, weights_only=True))
+    model.eval()
+    return model
 
-    def forward(self, x):
 
-        x = self.embedding(x)
+def predict_next(history_ids):
+    model = load_model()
+    history = [int(m) for m in history_ids]
 
-        output, (hidden, cell) = self.lstm(x)
+    if not history:
+        raise ValueError("Histórico vazio")
 
-        hidden = hidden[-1]
+    input_tensor = torch.LongTensor([history])
 
-        out = self.fc(hidden)
+    with torch.no_grad():
+        logits = model(input_tensor)
 
-        return out
+    predicted_movie = torch.argmax(logits, dim=1).item()
+    titles = load_movie_titles()
+    title = titles.get(predicted_movie, "Desconhecido")
+    return predicted_movie, title
 
-# ====================================
-# CAMINHOS
-# ====================================
 
-BASE_DIR = os.path.dirname(
-    os.path.abspath(__file__)
-)
-
-DATA_PATH = os.path.join(
-    BASE_DIR,
-    "../data/raw/ml-100k/u.data"
-)
-
-ITEM_PATH = os.path.join(
-    BASE_DIR,
-    "../data/raw/ml-100k/u.item"
-)
-
-MODEL_PATH = os.path.join(
-    BASE_DIR,
-    "nextflix_lstm.pth"
-)
-
-# ====================================
-# CARREGAR FILMES
-# ====================================
-
-movies_df = pd.read_csv(
-    ITEM_PATH,
-    sep="|",
-    encoding="latin-1",
-    header=None
-)
-
-movie_titles = {}
-
-for _, row in movies_df.iterrows():
-
-    movie_id = row[0]
-    movie_title = row[1]
-
-    movie_titles[movie_id] = movie_title
-
-# ====================================
-# CARREGAR DATASET
-# ====================================
-
-columns = [
-    "user_id",
-    "movie_id",
-    "rating",
-    "timestamp"
-]
-
-df = pd.read_csv(
-    DATA_PATH,
-    sep="\t",
-    names=columns
-)
-
-num_movies = df["movie_id"].max()
-
-# ====================================
-# CARREGAR MODELO
-# ====================================
-
-model = RecommenderLSTM(num_movies)
-
-model.load_state_dict(
-    torch.load(MODEL_PATH)
-)
-
-model.eval()
-
-# ====================================
-# HISTÓRICO VINDO DO NODE
-# ====================================
-
-history = sys.argv[1:]
-
-history = [
-    int(movie)
-    for movie in history
-]
-
-input_tensor = torch.LongTensor(
-    [history]
-)
-
-# ====================================
-# PREVISÃO
-# ====================================
-
-with torch.no_grad():
-
-    prediction = model(input_tensor)
-
-predicted_movie = torch.argmax(
-    prediction,
-    dim=1
-).item()
-
-# ====================================
-# RESULTADO FINAL
-# ====================================
-
-recommended_title = movie_titles.get(
-    predicted_movie,
-    "Desconhecido"
-)
-
-print(f"{predicted_movie}|{recommended_title}")
+if __name__ == "__main__":
+    history = sys.argv[1:]
+    movie_id, title = predict_next(history)
+    print(f"{movie_id}|{title}")
