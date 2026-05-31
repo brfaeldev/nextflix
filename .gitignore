@@ -1,0 +1,39 @@
+# Dependências Node
+node_modules/
+
+# Subpastas monorepo
+apps/backend/node_modules/
+apps/frontend/node_modules/
+
+# Logs
+npm-debug.log*
+
+# Ambiente
+.env
+
+# Build
+dist/
+build/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Banco SQLite (gerado em runtime)
+apps/backend/src/database/nextflix.db
+sqlite.db
+
+# Artefatos ML (regeneráveis via npm run ml:*)
+apps/backend/src/ml/models/*.pth
+apps/backend/src/ml/models/figures/
+apps/backend/src/ml/models/evaluation_report.json
+apps/backend/src/ml/models/training_history.json
+apps/backend/src/ml/models/experiments_results.json

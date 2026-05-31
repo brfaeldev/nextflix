@@ -1,0 +1,12 @@
+{
+    "name": "nextflix",
+    "version": "1.0.0",
+    "description": "Sistema de recomendação de filmes com LSTM (Nextflix)",
+    "scripts": {
+        "start": "echo Ver README.md: apps/backend e apps/frontend",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": ["streaming", "recommendation", "python", "node"],
+    "author": "Bruno Rafael Barbosa, João Pedro Magrin, Ryan Augusto Dias",
+    "licence": "ISC"
+}
